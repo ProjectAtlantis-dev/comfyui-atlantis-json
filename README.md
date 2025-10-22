@@ -43,7 +43,7 @@ Custom ComfyUI nodes for JSON processing and transcription workflows.
 1. Navigate to your ComfyUI custom_nodes directory
 2. Clone this repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/atlantis-json-nodes.git
+git clone https://github.com/ProjectAtlantis-dev/comfyui-atlantis-json.git
 ```
 3. Restart ComfyUI
 
