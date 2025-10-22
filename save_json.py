@@ -26,8 +26,7 @@ class SaveJSON:
         }
 
     OUTPUT_NODE = True
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("json_text",)
+    RETURN_TYPES = ()
     FUNCTION = "save_json_file"
     CATEGORY = "utils/text"
 
@@ -42,11 +41,11 @@ class SaveJSON:
                 os.makedirs(output_dir, exist_ok=True)
             except OSError as e:
                 print(f"Could not create directory {output_dir}: {e}")
-                return (json, {"ui": {"text": [f"Error: Could not create directory {output_dir}"]}})
+                return {"ui": {"images": []}}
 
         if json.strip() == '':
             print("No JSON specified to save! JSON is empty.")
-            return (json, {"ui": {"text": ["Error: No JSON content to save"]}})
+            return {"ui": {"images": []}}
 
         # Validate JSON if requested
         if validate_json:
@@ -65,13 +64,19 @@ class SaveJSON:
                 f.write(json)
             print(f"JSON saved to: {filepath}")
             
-            # Return the JSON content and UI feedback
-            return (json, {"ui": {"text": [f"Saved: {filename}"]}})
+            # Return UI data following SaveImage pattern - ALL files use "images" key
+            results = [{
+                "filename": filename,
+                "subfolder": "transcriptions",
+                "type": "output"
+            }]
+            
+            return {"ui": {"images": results}}
             
         except Exception as e:
             error_msg = f"Error saving JSON file: {e}"
             print(error_msg)
-            return (json, {"ui": {"text": [error_msg]}})
+            return {"ui": {"images": []}}
 
     def generate_filename(self, path, prefix, delimiter, number_padding):
         """Generate filename with automatic numbering"""
